@@ -1,0 +1,51 @@
+@using SpellCardsGenerator.Templates.Models
+
+@model SpellCardsGenerator.Templates.Models.SpellCardsTemplatedSpellViewModel
+
+@{
+  Layout = null;
+  
+  SpellCardsSpellViewModel spell = Model.Spell;
+  SpellCardsTemplateViewModel templateViewModel = Model.Template;
+}
+
+<div id="@spell.Slug" class="spell">
+  <div class="section">
+    <div class="header">
+      <h1 class="title">
+        <b>@spell.Name</b>
+      </h1>
+      <div
+        class="level-indicator"
+        style="background-color: var(--level-indicator-color-@spell.Level);">
+      </div>
+    </div>
+    <h4>@spell.MagicSchool, @spell.LevelName@(spell.IsRitual ? $" ({templateViewModel.RitualLabel})" : null)</h4>
+  </div>
+
+  <div class="section">
+    <div>
+      <b>@templateViewModel.CastingTimeLabel:</b> @spell.CastingTime
+    </div>
+    <div>
+      <b>@templateViewModel.RangeLabel:</b> @spell.Range
+    </div>
+    <div>
+      <b>@templateViewModel.ComponentsLabel:</b> @spell.Components
+    </div>
+    <div>
+      <b>@templateViewModel.DurationLabel:</b> @spell.Duration
+    </div>
+  </div>
+
+  <div class="section text-block">
+    @Html.Raw(spell.DescriptionHtml)
+  </div>
+
+  @if (spell.HigherLevelsDescription is string higherLevelsDescription)
+  {
+    <div class="section text-block">
+      <b>@templateViewModel.HigherLevelsLabel</b> @higherLevelsDescription
+    </div>
+  }
+</div>

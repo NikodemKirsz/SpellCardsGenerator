@@ -1,0 +1,205 @@
+@using SpellCardsGenerator.Templates.Models
+
+@model SpellCardsGenerator.Templates.Models.SpellCardsBaseViewModel
+
+@{
+  Layout = null;
+  
+  SpellCardsTemplateViewModel templateViewModel = Model.Template;
+}
+
+<!DOCTYPE html>
+<html lang="@templateViewModel.Lang">
+<head>
+  <meta charset="UTF-8">
+  <meta name="SpellCards"/>
+  <title>SpellCards</title>
+  <style>
+    :root,
+    #base {
+      --page-width: @templateViewModel.PageWidth;
+      --page-height: @templateViewModel.PageHeight;
+      --page-margin: @templateViewModel.PageMargin;
+    
+      --card-padding: @templateViewModel.CardPadding;
+      --font-size: @templateViewModel.FontSize;
+      --text-blocks-align: @(templateViewModel.JustifyText ? "justify" : "left");
+      --sections-gap: @templateViewModel.SectionGap;
+      --column-count: @templateViewModel.ColumnCount;
+    
+      --level-indicator-display: @templateViewModel.LevelIndicatorDisplay; 
+      --level-indicator-size: calc(var(--font-size) * 2);
+      --level-indicator-color-0: @templateViewModel.LevelIndicatorColor0;
+      --level-indicator-color-1: @templateViewModel.LevelIndicatorColor1;
+      --level-indicator-color-2: @templateViewModel.LevelIndicatorColor2;
+      --level-indicator-color-3: @templateViewModel.LevelIndicatorColor3;
+      --level-indicator-color-4: @templateViewModel.LevelIndicatorColor4;
+      --level-indicator-color-5: @templateViewModel.LevelIndicatorColor5;
+      --level-indicator-color-6: @templateViewModel.LevelIndicatorColor6;
+      --level-indicator-color-7: @templateViewModel.LevelIndicatorColor7;
+      --level-indicator-color-8: @templateViewModel.LevelIndicatorColor8;
+      --level-indicator-color-9: @templateViewModel.LevelIndicatorColor9;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      text-indent: 0;
+    }
+    body {
+      color: black;
+      font-family: Calibri, sans-serif;
+      font-size: var(--font-size);
+      font-style: normal;
+      text-decoration: none;
+    }
+    page {
+      display: block;
+      width: var(--page-width);
+      height: var(--page-height);
+      padding: var(--page-margin);
+      column-count: var(--column-count);
+      column-gap: 0;
+    }
+    page[measurement] {
+      column-count: unset;
+      column-gap: unset;
+    }
+    
+    h1 {
+      line-height: 110%;
+    }
+    h4 {
+      font-weight: normal;
+    }
+    i {
+      font-style: oblique 50deg;
+    }
+
+    ul, ol {
+      margin-bottom: 6px;
+    }
+    ul ~ ul, ul ~ ol, ol ~ ul, ol ~ ol {
+      margin-bottom: 0;
+    }
+    ol { 
+      list-style: decimal inside none;
+    }
+    ol li::marker {
+      color: transparent;
+      font-size: 12px;
+    }
+    ul li::marker {
+      color: black;
+      font-size: var(--font-size);
+    }
+    ul > li {
+      margin-left: var(--font-size);
+    }
+    ul > li > ul > li {
+      margin-left: calc(var(--font-size) / 4);
+    }
+
+    .tables-container {
+      display: ruby;
+    }
+    table {
+      width: 100%;
+      margin: 4px 0;
+      border: 2px solid;
+      border-collapse: collapse;
+    }
+    table.slim {
+      width: fit-content;
+    }
+    table + table {
+      margin-top: 6px;
+    }
+    table caption {
+      font-weight: bold;
+      border: 2px solid;
+      border-bottom: 0;
+      background-color: #BBB;
+    }
+    table tr:has(th) {
+      background-color: #DDD;
+      border: 2px solid;
+    }
+    table tr {
+      border: 1px solid;
+    }
+    table th {
+      text-align: center;
+    }
+    table td, th {
+      padding: 1px 4px;
+      border-right: 1px solid black;
+    }
+    table .inline {
+      white-space: nowrap;
+    }
+    
+    .spell {
+      display: inline-block;
+      border: black solid 1px;
+      padding: var(--card-padding);
+      break-inside: avoid;
+    }
+    .section:not(:last-child) {
+      margin-bottom: var(--sections-gap);
+    }
+    .header {
+      display: inline-flex;
+      gap: 8px;
+      width: 100%;
+    }
+    .title {
+      width: 100%;
+    }
+    .level-indicator {
+      display: var(--level-indicator-display);
+      min-height: var(--level-indicator-size);
+      height: var(--level-indicator-size);
+      min-width: var(--level-indicator-size);
+      width: var(--level-indicator-size);
+    }
+    .text-block {
+      text-align: var(--text-blocks-align);
+    }
+    
+    #MeasurementRect {
+      height: 100%;
+      width: 100%;
+      background-color: azure;
+    }
+    
+    @@page page {
+      size: var(--page-width) var(--page-height);
+      margin: var(--page-margin);
+    }
+    @@media screen {
+      page {
+        margin: 1cm auto;
+        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+      }
+    }
+    @@media print {
+      page {
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body id="base">
+@switch (Model)
+{
+  case SpellCardsMeasurementViewModel scmm:
+    @await Html.PartialAsync("~/Views/SpellCardsMeasurement.cshtml", scmm, ViewData)
+    break;
+  case SpellCardsViewModel scm:
+    @await Html.PartialAsync("~/Views/SpellCards.cshtml", scm, ViewData)
+    break;
+}
+</body>
+</html>

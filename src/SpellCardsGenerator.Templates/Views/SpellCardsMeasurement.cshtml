@@ -1,0 +1,24 @@
+@using SpellCardsGenerator.Templates.Models
+
+@model SpellCardsGenerator.Templates.Models.SpellCardsMeasurementViewModel
+
+@{
+  Layout = null;
+  
+  SpellCardsTemplateViewModel templateViewModel = Model.Template;
+  SpellCardsSpellsCollectionViewModel spellsCollectionViewModel = Model.Content;
+}
+
+<page>
+  @foreach (SpellCardsSpellViewModel spell in spellsCollectionViewModel.Spells)
+  {
+    @await Html.PartialAsync(
+      "~/Views/Components/SpellView.cshtml",
+      new SpellCardsTemplatedSpellViewModel(spell, templateViewModel),
+      ViewData
+    )
+  }
+</page>
+<page measurement>
+  <div id="MeasurementRect"></div>
+</page>

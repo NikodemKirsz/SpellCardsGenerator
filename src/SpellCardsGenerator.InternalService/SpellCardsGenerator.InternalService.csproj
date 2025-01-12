@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <MvcBuildViews>true</MvcBuildViews>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpellCardsGenerator.Common\SpellCardsGenerator.Common.csproj"/>
+    <ProjectReference Include="..\SpellCardsGenerator.Data\SpellCardsGenerator.Data.csproj" />
+    <ProjectReference Include="..\SpellCardsGenerator.Templates\SpellCardsGenerator.Templates.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Scripts\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0"/>
+    <PackageReference Include="PuppeteerSharp" Version="16.0.0" />
+    <PackageReference Include="Razor.Templating.Core" Version="2.0.0-rc.1"/>
+  </ItemGroup>
+</Project>

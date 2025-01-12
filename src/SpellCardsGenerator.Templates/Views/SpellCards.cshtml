@@ -1,0 +1,24 @@
+@using SpellCardsGenerator.Templates.Models
+
+@model SpellCardsGenerator.Templates.Models.SpellCardsViewModel
+
+@{
+  Layout = null;
+  
+  SpellCardsTemplateViewModel templateViewModel = Model.Template;
+  SpellCardsContentViewModel contentViewModel = Model.Content;
+}
+
+@foreach (var page in contentViewModel.Pages)
+{
+  <page>
+    @foreach (SpellCardsSpellViewModel spell in page.Spells)
+    {
+      @await Html.PartialAsync(
+        "~/Views/Components/SpellView.cshtml",
+        new SpellCardsTemplatedSpellViewModel(spell, templateViewModel),
+        ViewData
+      )
+    }
+  </page>
+}
